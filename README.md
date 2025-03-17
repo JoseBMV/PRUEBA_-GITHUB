@@ -5,10 +5,14 @@ Una calculadora simple con interfaz gráfica implementada en Python usando Tkint
 ## Características
 
 - Operaciones básicas (suma, resta, multiplicación, división)
+- Operaciones avanzadas (potencia, raíz cuadrada, porcentaje)
 - Interfaz gráfica responsive
 - Cambio entre modo oscuro y claro
-- Manejo de errores
+- Manejo de errores robusto
 - Botón de limpieza (Clear)
+- Historial de operaciones
+- Teclas de acceso rápido
+- Memoria (M+, M-, MR, MC)
 
 ## Requisitos
 
@@ -28,10 +32,19 @@ python prueba.py
 ## Uso
 
 - Use los botones numéricos (0-9) para ingresar números
-- Use los botones de operadores (+, -, *, /) para realizar operaciones
+- Use los botones de operadores (+, -, *, /, ^, √, %) para realizar operaciones
 - Presione '=' para calcular el resultado
 - Presione 'C' para limpiar la pantalla
 - Use el botón 'Modo Claro/Oscuro' para cambiar el tema
+- Utilice las teclas de memoria:
+  - M+ para añadir a memoria
+  - M- para restar de memoria
+  - MR para recuperar valor de memoria
+  - MC para limpiar memoria
+- Accesos rápidos:
+  - ESC: Limpiar
+  - Enter: Calcular
+  - Delete: Borrar último dígito
 
 ## Estructura del Proyecto
 
@@ -40,10 +53,25 @@ python prueba.py
 └── README.md      # Documentación del proyecto
 ```
 
+## Funcionalidades Avanzadas
+
+### Memoria
+La calculadora incluye funciones de memoria que permiten almacenar y recuperar resultados para cálculos posteriores.
+
+### Historial
+Mantiene un registro de las últimas operaciones realizadas, accesible mediante el panel lateral.
+
+### Manejo de Errores
+- División por cero
+- Raíz cuadrada de números negativos
+- Desbordamiento numérico
+- Entradas inválidas
+
 ## Capturas de Pantalla
 
-[Aquí puede agregar capturas de pantalla de su calculadora en modo claro y oscuro]
+![Modo Claro](screenshots/light-mode.png)
+![Modo Oscuro](screenshots/dark-mode.png)
 
 ## Licencia
 
-[Especifique su licencia aquí]
+Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
