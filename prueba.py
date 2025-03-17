@@ -14,6 +14,9 @@ class Calculator:
         for i in range(4):
             self.window.grid_columnconfigure(i, weight=1)
         
+        # Vincular evento de redimensionamiento
+        self.window.bind('<Configure>', self.on_resize)
+        
         # Pantalla de resultados
         self.display = tk.Entry(self.window, width=25, font=('Arial', 18), justify='right')
         self.display.grid(row=0, column=0, columnspan=4, padx=5, pady=5, sticky='nsew')
@@ -27,25 +30,28 @@ class Calculator:
         ]
         
         # Crear y posicionar botones
+        self.buttons = []  # Lista para almacenar referencias a los botones
         row = 1
         col = 0
         for (button, tipo) in buttons:
             cmd = lambda x=button: self.click(x)
-            btn = tk.Button(self.window, text=button, command=cmd)
+            btn = tk.Button(self.window, text=button, command=cmd, font=('Arial', 14))
             btn.grid(row=row, column=col, padx=2, pady=2, sticky='nsew')
-            btn.tipo = tipo  # Guardar el tipo de botón para el tema
+            btn.tipo = tipo
+            self.buttons.append(btn)  # Guardar referencia al botón
             col += 1
             if col > 3:
                 col = 0
                 row += 1
         
         # Botón de limpiar
-        clear_btn = tk.Button(self.window, text='C', command=self.clear)
+        clear_btn = tk.Button(self.window, text='C', command=self.clear, font=('Arial', 14))
         clear_btn.grid(row=5, column=0, padx=2, pady=2, sticky='nsew')
         clear_btn.tipo = 'op'
+        self.buttons.append(clear_btn)
         
         # Botón de modo oscuro/claro
-        self.theme_button = tk.Button(self.window, text='Modo Claro', command=self.toggle_theme)
+        self.theme_button = tk.Button(self.window, text='Modo Claro', command=self.toggle_theme, font=('Arial', 12))
         self.theme_button.grid(row=5, column=1, columnspan=2, padx=2, pady=2, sticky='nsew')
         self.theme_button.tipo = 'theme'
         
@@ -73,18 +79,18 @@ class Calculator:
     
     def set_theme(self):
         if self.dark_mode:
-            bg_color = '#333333'
-            num_bg = '#4a4a4a'
-            op_bg = '#ff9500'
+            bg_color = '#2C3E50'  # Azul oscuro
+            num_bg = '#E74C3C'    # Rojo
+            op_bg = '#3498DB'     # Azul claro
             fg_color = 'white'
-            op_fg = 'black'  # Color del texto para operaciones en modo oscuro
+            op_fg = 'white'
             self.theme_button.config(text='Modo Claro')
         else:
-            bg_color = '#f0f0f0'
-            num_bg = '#ffffff'
-            op_bg = '#ff9500'
+            bg_color = '#ECF0F1'  # Gris muy claro
+            num_bg = '#E74C3C'    # Rojo
+            op_bg = '#2980B9'     # Azul medio
             fg_color = 'black'
-            op_fg = 'white'  # Color del texto para operaciones en modo claro
+            op_fg = 'white'
             self.theme_button.config(text='Modo Oscuro')
             
         self.window.configure(bg=bg_color)
@@ -99,6 +105,29 @@ class Calculator:
                         widget.configure(bg=op_bg, fg=op_fg)  # Usar el color de texto específico para operaciones
                     else:  # theme button
                         widget.configure(bg=bg_color, fg=fg_color)
+
+    def on_resize(self, event):
+        # Ignorar eventos que no son de la ventana principal
+        if event.widget != self.window:
+            return
+            
+        # Calcular nuevo tamaño de fuente basado en el tamaño de la ventana
+        window_width = self.window.winfo_width()
+        window_height = self.window.winfo_height()
+        
+        # Ajustar tamaño de fuente para la pantalla
+        display_font_size = min(int(window_height/15), int(window_width/15))
+        self.display.configure(font=('Arial', display_font_size))
+        
+        # Ajustar tamaño de fuente para los botones
+        button_font_size = min(int(window_height/25), int(window_width/25))
+        
+        # Actualizar fuente de todos los botones
+        for button in self.buttons:
+            button.configure(font=('Arial', button_font_size))
+        
+        # Ajustar el botón de tema con un tamaño ligeramente menor
+        self.theme_button.configure(font=('Arial', max(8, button_font_size-2)))
 
 if __name__ == '__main__':
     Calculator()
