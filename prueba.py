@@ -77,12 +77,14 @@ class Calculator:
             num_bg = '#4a4a4a'
             op_bg = '#ff9500'
             fg_color = 'white'
+            op_fg = 'black'  # Color del texto para operaciones en modo oscuro
             self.theme_button.config(text='Modo Claro')
         else:
             bg_color = '#f0f0f0'
             num_bg = '#ffffff'
             op_bg = '#ff9500'
             fg_color = 'black'
+            op_fg = 'white'  # Color del texto para operaciones en modo claro
             self.theme_button.config(text='Modo Oscuro')
             
         self.window.configure(bg=bg_color)
@@ -94,7 +96,7 @@ class Calculator:
                     if widget.tipo == 'num':
                         widget.configure(bg=num_bg, fg=fg_color)
                     elif widget.tipo == 'op':
-                        widget.configure(bg=op_bg, fg='white')
+                        widget.configure(bg=op_bg, fg=op_fg)  # Usar el color de texto específico para operaciones
                     else:  # theme button
                         widget.configure(bg=bg_color, fg=fg_color)
 
